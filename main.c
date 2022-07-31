@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 struct board {
     int sand[5][5];
@@ -22,8 +23,28 @@ void fill_array(struct board *input, int num) {
     }
 }
 
+void drop_sand(struct board *input) {
+    input->sand[2][2]++;
+}
+
+void receap(struct board *input, int i, int j) {
+    if (input->sand[i][j] == 10) {
+        input->sand[i][j] = 0;
+        input->sand[i+1][j]++;
+        input->sand[i-1][j]++;
+        input->sand[i][j+1]++;
+        input->sand[i][j-1]++;
+    }
+}
+
 int main() {
     struct board sandpiles;
     fill_array(&sandpiles, 0);
-    print_array(&sandpiles);
+    while (1) {
+        printf ("\n");
+        drop_sand(&sandpiles);
+        receap(&sandpiles, 2, 2);
+        print_array(&sandpiles);
+        sleep(1);
+    }
 }
