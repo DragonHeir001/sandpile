@@ -52,13 +52,13 @@ int main() {
     struct board sandpiles;
     fill_array(&sandpiles, 0);
     while (1) {
-        printf ("\n");
+        system("clear");
         drop_sand(&sandpiles);
         receap(&sandpiles);
         receap(&sandpiles);
         receap(&sandpiles);
         receap(&sandpiles);
         print_array(&sandpiles);
-        sleep(1);
+        usleep(300000);
     }
 }
