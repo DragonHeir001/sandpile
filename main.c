@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
 
 struct board {
     int sand[5][5];
@@ -27,13 +26,25 @@ void drop_sand(struct board *input) {
     input->sand[2][2]++;
 }
 
-void receap(struct board *input, int i, int j) {
-    if (input->sand[i][j] == 10) {
-        input->sand[i][j] = 0;
-        input->sand[i+1][j]++;
-        input->sand[i-1][j]++;
-        input->sand[i][j+1]++;
-        input->sand[i][j-1]++;
+void receap(struct board *input) {
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 5; j++) {
+            if (input->sand[i][j] > 3) {
+                input->sand[i][j] -= 4;
+                if (i+1 < 5 && j < 5 && i+1 >= 0 && j >= 0) {
+                    input->sand[i+1][j]++;
+                }
+                if (i-1 < 5 && j < 5 && i-1 >= 0 && j >= 0) {
+                    input->sand[i-1][j]++;
+                }
+                if (i < 5 && j+1 < 5 && i >= 0 && j+1 >= 0) {
+                    input->sand[i][j+1]++;
+                }
+                if (i < 5 && j-1 < 5 && i >= 0 && j-1 >= 0) {
+                    input->sand[i][j-1]++;
+                }
+            }
+        }
     }
 }
 
@@ -43,7 +54,10 @@ int main() {
     while (1) {
         printf ("\n");
         drop_sand(&sandpiles);
-        receap(&sandpiles, 2, 2);
+        receap(&sandpiles);
+        receap(&sandpiles);
+        receap(&sandpiles);
+        receap(&sandpiles);
         print_array(&sandpiles);
         sleep(1);
     }
