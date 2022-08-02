@@ -41,7 +41,11 @@ void set_color(int num) {
 }
 
 void drop_sand(struct board *input) {
-    input->sand[10][10]++;
+    //-backup-  input->sand[10][10]++;
+    int row = rand() % 21;
+    int col = rand() % 21;
+    input->sand[row][col]++;
+
 }
 
 void receap(struct board *input) {
